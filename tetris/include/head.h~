@@ -1,0 +1,107 @@
+#ifndef _Russia_Tetris_H
+#define _Russia_Tetris_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <termios.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/time.h>
+
+///////////////////////////////////////////////////
+
+#define BG_LEFT 10
+#define BG_TOP 3
+#define WITH 10
+#define HIGH 22
+#define STATUS_WITH 5
+#define BLOCK_NUM 7
+
+///////////////////////////////////////////////////
+
+#define COLOR_NUM 8
+#define BLACK 30
+#define RED 31
+#define GREEN 32
+#define YELLOW 33
+#define BLUE 34
+#define PURPLE 35
+#define GREEN_BLUE 36
+#define WHITE 37
+
+///////////////////////////////////////////////////
+
+typedef struct LINE{
+	int x;
+	int y;
+	int length;
+	int character;
+	int color;
+}Line,*pLine;
+
+typedef struct BLOCK{
+	int style;
+	int forward;
+	int x;
+	int color;
+	int y;
+	int pb[4][4];
+}Block,*pBlock;
+
+typedef struct PLAYER
+{
+	Block now;
+	Block old;
+	Block will;
+	char *name;
+	int speed;
+	int score;
+	
+}Player,*pPlayer;
+
+///////////////////////////////////////////////////
+
+void set_timer(int c);
+void gotoxy(int x,int y);
+int getch(void);
+void putch(int x, int y, int character);
+void assistant_driver(void);
+void draw_line_row(pLine line);
+void draw_line_col(pLine line);
+void draw_text(int x,int y,int tcolor,const char *text);
+void draw_number(int x,int y,int tcolor,int num);
+void show_background();
+void get_input();
+
+
+///////////////////////////////////////////////////
+void Init_player();
+void show_blocks();
+void run_game(int key);
+
+
+
+
+
+///////////////////////////////////////////////////
+void make_will_block(pPlayer player);
+void delete_old(pBlock p);
+void turn_around(pPlayer player);
+void turn_game(int time);
+void move_block_a(pPlayer player);
+void move_block_d(pPlayer player);
+void move_block_s(pPlayer player);
+int horizontal_left_collision(int (*tmp)[4],pBlock p);
+int horizontal_right_collision(int (*tmp)[4],pBlock p);
+int vertical_collision(int (*tmp)[4],pBlock p);
+int is_horizontal_left_collision(pBlock p);
+int is_horizontal_right_collision(pBlock p);
+int is_vertical_collision(pBlock p);
+void init_game();
+
+
+
+
+
+#endif
