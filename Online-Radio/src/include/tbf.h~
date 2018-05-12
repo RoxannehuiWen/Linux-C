@@ -1,0 +1,16 @@
+#ifndef _TBF_H_
+#define _TBF_H_
+#define TBF_MAX 1024
+#define CPS 10
+#define BURST 100
+#define BUFSIZE 1024
+
+
+typedef void tbf_t;
+
+tbf_t *tbf_init(int cps,int burst);
+int tbf_destroy(tbf_t *);
+int tbf_fetchtoken(tbf_t *,int);
+int tbf_returntoken(tbf_t *,int);
+
+#endif
